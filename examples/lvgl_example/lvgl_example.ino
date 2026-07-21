@@ -4,9 +4,6 @@
 #include "TouchDrvGT911.hpp"
 #include "utilities.h"
 
-static void slider_event_cb(lv_event_t *e);
-static lv_obj_t *slider_label;
-
 TFT_eSPI        tft;
 TouchDrvGT911 touch;
 
@@ -134,21 +131,6 @@ void setupLvgl()
     lv_indev_drv_register( &indev_touchpad );
 }
 
-static void slider_event_cb(lv_event_t *e)
-{
-    lv_obj_t *slider = lv_event_get_target(e);
-    char buf[8];
-    lv_snprintf(buf, sizeof(buf), "%d%%", (int)lv_slider_get_value(slider));
-    lv_label_set_text(slider_label, buf);
-    lv_obj_align_to(slider_label, slider, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
-}
-
-static void set_angle(void *obj, int32_t v)
-{
-    lv_arc_set_value((lv_obj_t *)obj, v);
-}
-
-
 void setup()
 {
     Serial.begin(115200);
@@ -213,66 +195,6 @@ void setup()
 
     setupLvgl();
 
-#if 0
-    lv_obj_t *tv = lv_tileview_create(lv_scr_act());
-
-    /*Tile1: just a label*/
-    lv_obj_t *tile1 = lv_tileview_add_tile(tv, 0, 0, LV_DIR_BOTTOM | LV_DIR_HOR);
-    lv_obj_t *label = lv_label_create(tile1);
-    lv_label_set_text(label, "Scroll down");
-    lv_obj_center(label);
-
-
-    /*Tile2: a slider*/
-    lv_obj_t *tile2 = lv_tileview_add_tile(tv, 0, 1, LV_DIR_TOP | LV_DIR_RIGHT);
-
-    /*Create a slider in the center of the display*/
-    lv_obj_t *slider = lv_slider_create(tile2);
-    lv_obj_center(slider);
-    lv_obj_add_event_cb(slider, slider_event_cb, LV_EVENT_VALUE_CHANGED, NULL);
-    /*Create a label below the slider*/
-    slider_label = lv_label_create(tile2);
-    lv_label_set_text(slider_label, "0%");
-    lv_obj_align_to(slider_label, slider, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
-
-    /*Tile3: a list*/
-    lv_obj_t *tile3 = lv_tileview_add_tile(tv, 1, 1, LV_DIR_LEFT);
-    lv_obj_t *list = lv_list_create(tile3);
-    lv_obj_set_size(list, LV_PCT(100), LV_PCT(100));
-
-    lv_list_add_btn(list, NULL, "One");
-    lv_list_add_btn(list, NULL, "Two");
-    lv_list_add_btn(list, NULL, "Three");
-    lv_list_add_btn(list, NULL, "Four");
-    lv_list_add_btn(list, NULL, "Five");
-    lv_list_add_btn(list, NULL, "Six");
-    lv_list_add_btn(list, NULL, "Seven");
-    lv_list_add_btn(list, NULL, "Eight");
-    lv_list_add_btn(list, NULL, "Nine");
-    lv_list_add_btn(list, NULL, "Ten");
-
-    /*Tile4: a arc*/
-    lv_obj_t *tile4 = lv_tileview_add_tile(tv, 1, 0, LV_DIR_HOR);
-
-    /*Create an Arc*/
-    lv_obj_t *arc = lv_arc_create(tile4);
-    lv_arc_set_rotation(arc, 270);
-    lv_arc_set_bg_angles(arc, 0, 360);
-    lv_obj_remove_style(arc, NULL, LV_PART_KNOB);   /*Be sure the knob is not displayed*/
-    lv_obj_clear_flag(arc, LV_OBJ_FLAG_CLICKABLE);  /*To not allow adjusting by click*/
-    lv_obj_center(arc);
-
-    lv_anim_t a;
-    lv_anim_init(&a);
-    lv_anim_set_var(&a, arc);
-    lv_anim_set_exec_cb(&a, set_angle);
-    lv_anim_set_time(&a, 1000);
-    lv_anim_set_repeat_count(&a, LV_ANIM_REPEAT_INFINITE);    /*Just for the demo*/
-    lv_anim_set_repeat_delay(&a, 500);
-    lv_anim_set_values(&a, 0, 100);
-    lv_anim_start(&a);
-#else
-
     const int offset = 0;
 
     struct align_str {
@@ -315,7 +237,7 @@ void setup()
         lv_label_set_text_fmt(label, "%d", i);
         lv_obj_center(label);
     }
-#endif
+
     // Adjust backlight
     pinMode(BOARD_BL_PIN, OUTPUT);
     setBrightness(16);

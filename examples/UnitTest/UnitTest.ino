@@ -120,9 +120,7 @@ uint8_t         status;
 TaskHandle_t    playHandle = NULL;
 TaskHandle_t    radioHandle = NULL;
 
-static lv_obj_t *vad_btn_label;
-static uint32_t vad_detected_counter = 0;
-static TaskHandle_t vadTaskHandler;
+
 bool        kbDetected = false;
 bool        touchDetected = false;
 bool        transmissionFlag = true;
@@ -419,9 +417,9 @@ bool setupSD()
             uint32_t cardSize = SD.cardSize() / (1024 * 1024);
             uint32_t cardTotal = SD.totalBytes() / (1024 * 1024);
             uint32_t cardUsed = SD.usedBytes() / (1024 * 1024);
-            Serial.printf("SD Card Size: %lu MB\n", cardSize);
-            Serial.printf("Total space: %lu MB\n",  cardTotal);
-            Serial.printf("Used space: %lu MB\n",   cardUsed);
+            Serial.printf("SD Card Size: %u MB\n", cardSize);
+            Serial.printf("Total space: %u MB\n",  cardTotal);
+            Serial.printf("Used space: %u MB\n",   cardUsed);
             return true;
         }
     }
@@ -666,6 +664,8 @@ bool checkKb()
 }
 
 #ifdef USE_ESP_VAD
+static uint32_t vad_detected_counter = 0;
+static TaskHandle_t vadTaskHandler;
 void vadTask(void *params)
 {
     Serial.println("vadTask(void *params)");
@@ -1302,17 +1302,11 @@ static void setupLvgl()
 }
 
 
-
-
-
-
-
 uint8_t buffer[256];
 
 int getAck(uint8_t *buffer, uint16_t size, uint8_t requestedClass, uint8_t requestedID)
 {
     uint16_t    ubxFrameCounter = 0;
-    bool        ubxFrame = 0;
     uint32_t    startTime = millis();
     uint16_t    needRead;
 

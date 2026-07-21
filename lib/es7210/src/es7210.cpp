@@ -40,7 +40,6 @@
 
 
 static TwoWire *es7210wire;
-static es7210_gain_value_t gain;
 
 /*
  * Clock coefficient structer
@@ -58,7 +57,7 @@ struct _coeff_div_es7210 {
     uint32_t lrck_l;          /* The low 8 bits of lrck */
 };
 
-static const char *TAG = "ES7210";
+#define TAG  "ES7210"
 
 static es7210_input_mics_t mic_select = (es7210_input_mics_t)(ES7210_INPUT_MIC1 | ES7210_INPUT_MIC2 | ES7210_INPUT_MIC3 | ES7210_INPUT_MIC4);
 

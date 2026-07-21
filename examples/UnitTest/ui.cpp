@@ -45,8 +45,10 @@ enum {
 };
 typedef uint8_t lv_menu_builder_variant_t;
 
-static void back_event_handler(lv_event_t *e);
-static void switch_handler(lv_event_t *e);
+
+// static void back_event_handler(lv_event_t *e);
+// static void switch_handler(lv_event_t *e);
+
 lv_obj_t *root_page;
 static lv_obj_t *create_text(lv_obj_t *parent, const char *icon, const char *txt,
                              lv_menu_builder_variant_t builder_variant);
@@ -507,6 +509,7 @@ void setupUI(void)
     lv_timer_handler();
 }
 
+#if 0
 static void back_event_handler(lv_event_t *e)
 {
     lv_obj_t *obj = lv_event_get_target(e);
@@ -535,6 +538,7 @@ static void switch_handler(lv_event_t *e)
         }
     }
 }
+#endif
 
 static lv_obj_t *create_text(lv_obj_t *parent, const char *icon, const char *txt,
                              lv_menu_builder_variant_t builder_variant)
