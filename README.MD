@@ -82,8 +82,12 @@ You can upload the assets contents for the speaker demo, using the "Upload Files
 1. [AliExpress](https://www.aliexpress.com/item/1005005692235592.html)
 2. [LilyGo Store](https://www.lilygo.cc/products/t-deck)
 
-
-
 ## 5️⃣ Pins:
 
 See [utilities.h](./examples//UnitTest//utilities.h)
+
+## Shell
+
+- See [shell](./shell/)
+
+![](./shell/T_Deck_2.png)
