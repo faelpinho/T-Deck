@@ -79,9 +79,14 @@
 #define RADIO_CR             6
 #endif
 
+#ifdef  JAPAN_MIC
+#define RADIO_TX_POWER       7
+#else
 #ifndef RADIO_TX_POWER
 #define RADIO_TX_POWER       22
 #endif
+#endif
+
 
 #define DEFAULT_OPA          100
 

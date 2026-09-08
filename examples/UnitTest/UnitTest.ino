@@ -99,6 +99,9 @@ lv_indev_t  *kb_indev = NULL;
 lv_indev_t  *mouse_indev = NULL;
 lv_indev_t  *touch_indev = NULL;
 uint32_t    gps_start_ms = 0;
+// Trackball sensitivity
+// If the trackball is not sensitive enough or too sensitive, you can adjust this value.
+const uint16_t trackball_sensitivity = 24;
 
 LV_IMG_DECLARE(image_emoji);
 
@@ -1032,8 +1035,6 @@ void setup()
     lv_obj_set_scrollbar_mode(main_count, LV_SCROLLBAR_MODE_OFF);
 #endif
 
-    setupWiFi();
-
     bool foundGPS = false;
     foundGPS = setupGPS();
     if (!foundGPS) {
@@ -1064,6 +1065,8 @@ void setup()
     lv_obj_del(logo);
 
     setupUI();
+
+    setupWiFi();
 
     xTaskCreate(taskPlaySong, "play", 1024 * 4, NULL, 10, &playHandle);
 }
@@ -1137,7 +1140,7 @@ static void mouse_read(lv_indev_drv_t *indev, lv_indev_data_t *data)
                                  BOARD_BOOT_PIN
                                 };
     static bool last_dir[5];
-    uint8_t pos = 10;
+    uint8_t pos = trackball_sensitivity;
     for (int i = 0; i < 5; i++) {
         bool dir = digitalRead(dir_pins[i]);
         if (dir != last_dir[i]) {
