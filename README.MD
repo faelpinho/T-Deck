@@ -2,6 +2,11 @@
 
 ## **English | [中文](README_CN.MD)**
 
+> \[!TIP]
+>
+> For the factory firmware of the new version, please visit [LilyGoLib](https://github.com/Xinyuan-LilyGO/LilyGoLib).
+>
+
 ## News:
 
 1. T-Deck-Plus has assigned the pins on the **Grove** interface to the GPS module, so the **Grove** interface of T-Deck-Plus cannot be used.
